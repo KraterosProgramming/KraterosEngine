@@ -27,6 +27,7 @@ protected:
     friend class Game;
 
     Library();
+    ~Library();
 
     static bool loadTextures(const std::string &directory);
     static bool loadSprites(const std::string &directory);

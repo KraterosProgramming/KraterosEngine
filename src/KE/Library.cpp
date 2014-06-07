@@ -16,6 +16,11 @@ Library::Library() :
 
 }
 
+Library::~Library()
+{
+    Log() << "library closed";
+}
+
 bool Library::loadTextures(const std::string &directory)
 {
     return library.textures.loadDirectory(directory);

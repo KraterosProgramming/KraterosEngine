@@ -8,16 +8,19 @@ namespace KE
 Renderer::Renderer()
 {
     this->sdlRenderer = nullptr;
+    this->window = nullptr;
 }
 
 Renderer::~Renderer()
 {
     unload();
+    Log() << "renderer closed";
 }
 
-void Renderer::load(SDL_Renderer *sdlRenderer)
+void Renderer::load(SDL_Renderer *sdlRenderer, const Window *window)
 {
     this->sdlRenderer = sdlRenderer;
+    this->window = window;
 }
 
 void Renderer::unload()
@@ -27,6 +30,7 @@ void Renderer::unload()
         SDL_DestroyRenderer(sdlRenderer);
         sdlRenderer = nullptr;
     }
+    this->window = nullptr;
 }
 
 Renderer::operator SDL_Renderer*() const
@@ -56,7 +60,7 @@ bool Renderer::create(const Window &window)
     }
     else
     {
-        load(created);
+        load(created, &window);
     }
     return created;
 }
@@ -146,35 +150,41 @@ bool Renderer::render(const Texture &texture, const Rect &source, const Rect &de
 
 bool Renderer::captureScreen()
 {
-    int w = WINDOW_WIDTH;
-    int h = WINDOW_HEIGHT;
-
-    char pixels[w * h * 3];
-    if (SDL_RenderReadPixels(Game::getRenderer(), NULL, 0, pixels, 3*w) < 0)
+    if ((!window) || (!sdlRenderer))
     {
-        Error() << "reading screen pixels: " << SDL_GetError();
+        Error() << "trying to capture screen: renderer not initialized";
     }
     else
     {
-        Surface screen;
-        if (!screen.create(w, h, 24, pixels))
+        Point size = window->getSize();
+
+        char pixels[size.x * size.y * 3];
+        if (SDL_RenderReadPixels(Game::getRenderer(), NULL, 0, pixels, 3*size.x) < 0)
         {
-            Error() << "taking a screen shot: " << SDL_GetError();
+            Error() << "reading screen pixels: " << SDL_GetError();
         }
         else
         {
-            time_t now = time(nullptr);
-
-            char fileName[255];
-            strftime(fileName, 255, "screenshots/%Y_%m_%d__%H_%M_%S.bmp", localtime(&now));
-
-            if (SDL_SaveBMP(screen, fileName) < 0)
+            Surface screen;
+            if (!screen.create(size.x, size.y, 24, pixels))
             {
-                Error() << "saving screen shot: " << SDL_GetError();
+                Error() << "taking a screen shot: " << SDL_GetError();
             }
             else
             {
-                return true;
+                time_t now = time(nullptr);
+
+                char fileName[255];
+                strftime(fileName, 255, "screenshots/%Y_%m_%d__%H_%M_%S.bmp", localtime(&now));
+
+                if (SDL_SaveBMP(screen, fileName) < 0)
+                {
+                    Error() << "saving screen shot: " << SDL_GetError();
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
     }

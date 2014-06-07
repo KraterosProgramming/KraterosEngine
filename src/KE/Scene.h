@@ -36,6 +36,11 @@ protected:
     void receive(ObjectList &ol);
 
     Object *findObject(const std::string &keyname) const;
+
+public:
+    void start();
+    void exit();
+    void rearrange();
 };
 
 }

@@ -2,6 +2,8 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+#include "Point.h"
+
 namespace KE
 {
 
@@ -13,7 +15,7 @@ class Window
     void unload();
 
 protected:
-    friend class App;
+    friend class Game;
 
     Window();
     ~Window();
@@ -22,6 +24,10 @@ protected:
 
 public:
     operator SDL_Window*() const;
+
+    Point getSize() const;
+    void setSize(const Point &p);
+    void setTitle(const std::string &title);
 };
 
 }

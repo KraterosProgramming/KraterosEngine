@@ -2,6 +2,8 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="KraterosEngine">
 		<Project filename="engine/KraterosEngine.cbp" />
-		<Project filename="test/test.cbp" />
+		<Project filename="test/test.cbp">
+			<Depends filename="engine/KraterosEngine.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>

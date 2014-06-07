@@ -37,10 +37,13 @@ public:
     void setZ(int z);
 
     void update();
-    virtual void onUpdate() = 0;
+    virtual void onUpdate() { }
 
     void draw();
-    virtual void onDraw() = 0;
+    virtual void onDraw() { }
+
+    void rearrange();
+    virtual void onRearrange() { }
 };
 
 }

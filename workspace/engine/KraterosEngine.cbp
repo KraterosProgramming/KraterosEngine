@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../lib/KraterosEngine-d" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/KraterosEngine-d" imp_lib="../../lib/$(TARGET_OUTPUT_BASENAME).a" def_file="../../lib/$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -15,10 +15,11 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DKRATEROS_ENGINE_DEBUG" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="../../lib/KraterosEngine" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/KraterosEngine" imp_lib="../../lib/$(TARGET_OUTPUT_BASENAME).a" def_file="../../lib/$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -26,6 +27,7 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-DKRATEROS_ENGINE" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -43,59 +45,57 @@
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
 		</Linker>
-		<Unit filename="../../src/App.cpp" />
-		<Unit filename="../../src/App.h" />
-		<Unit filename="../../src/Audio.h" />
-		<Unit filename="../../src/Circle.cpp" />
-		<Unit filename="../../src/Circle.h" />
-		<Unit filename="../../src/Collection.h" />
-		<Unit filename="../../src/Color.cpp" />
-		<Unit filename="../../src/Color.h" />
-		<Unit filename="../../src/Console.cpp" />
-		<Unit filename="../../src/Console.h" />
-		<Unit filename="../../src/Cursor.cpp" />
-		<Unit filename="../../src/Cursor.h" />
-		<Unit filename="../../src/Font.cpp" />
-		<Unit filename="../../src/Font.h" />
-		<Unit filename="../../src/Game.cpp" />
-		<Unit filename="../../src/Game.h" />
-		<Unit filename="../../src/Geometry.cpp" />
-		<Unit filename="../../src/Geometry.h" />
-		<Unit filename="../../src/Input.h" />
-		<Unit filename="../../src/KE.h" />
-		<Unit filename="../../src/Keyboard.h" />
-		<Unit filename="../../src/Library.cpp" />
-		<Unit filename="../../src/Library.h" />
-		<Unit filename="../../src/Line.cpp" />
-		<Unit filename="../../src/Line.h" />
-		<Unit filename="../../src/Music.cpp" />
-		<Unit filename="../../src/Music.h" />
-		<Unit filename="../../src/Object.cpp" />
-		<Unit filename="../../src/Object.h" />
-		<Unit filename="../../src/Point.cpp" />
-		<Unit filename="../../src/Point.h" />
-		<Unit filename="../../src/Rect.cpp" />
-		<Unit filename="../../src/Rect.h" />
-		<Unit filename="../../src/Renderer.cpp" />
-		<Unit filename="../../src/Renderer.h" />
-		<Unit filename="../../src/Scene.cpp" />
-		<Unit filename="../../src/Scene.h" />
-		<Unit filename="../../src/Sound.cpp" />
-		<Unit filename="../../src/Sound.h" />
-		<Unit filename="../../src/Sprite.cpp" />
-		<Unit filename="../../src/Sprite.h" />
-		<Unit filename="../../src/Surface.cpp" />
-		<Unit filename="../../src/Surface.h" />
-		<Unit filename="../../src/Texture.cpp" />
-		<Unit filename="../../src/Texture.h" />
-		<Unit filename="../../src/Tools.cpp" />
-		<Unit filename="../../src/Tools.h" />
-		<Unit filename="../../src/Video.h" />
-		<Unit filename="../../src/Window.cpp" />
-		<Unit filename="../../src/Window.h" />
-		<Unit filename="../../src/tinydir.h" />
-		<Unit filename="../../src/tinyxml2.cpp" />
-		<Unit filename="../../src/tinyxml2.h" />
+		<Unit filename="../../src/KE/Audio.h" />
+		<Unit filename="../../src/KE/Circle.cpp" />
+		<Unit filename="../../src/KE/Circle.h" />
+		<Unit filename="../../src/KE/Collection.h" />
+		<Unit filename="../../src/KE/Color.cpp" />
+		<Unit filename="../../src/KE/Color.h" />
+		<Unit filename="../../src/KE/Console.cpp" />
+		<Unit filename="../../src/KE/Console.h" />
+		<Unit filename="../../src/KE/Cursor.cpp" />
+		<Unit filename="../../src/KE/Cursor.h" />
+		<Unit filename="../../src/KE/Font.cpp" />
+		<Unit filename="../../src/KE/Font.h" />
+		<Unit filename="../../src/KE/Game.cpp" />
+		<Unit filename="../../src/KE/Game.h" />
+		<Unit filename="../../src/KE/Geometry.cpp" />
+		<Unit filename="../../src/KE/Geometry.h" />
+		<Unit filename="../../src/KE/Input.h" />
+		<Unit filename="../../src/KE/KE.h" />
+		<Unit filename="../../src/KE/Keyboard.h" />
+		<Unit filename="../../src/KE/Library.cpp" />
+		<Unit filename="../../src/KE/Library.h" />
+		<Unit filename="../../src/KE/Line.cpp" />
+		<Unit filename="../../src/KE/Line.h" />
+		<Unit filename="../../src/KE/Music.cpp" />
+		<Unit filename="../../src/KE/Music.h" />
+		<Unit filename="../../src/KE/Object.cpp" />
+		<Unit filename="../../src/KE/Object.h" />
+		<Unit filename="../../src/KE/Point.cpp" />
+		<Unit filename="../../src/KE/Point.h" />
+		<Unit filename="../../src/KE/Rect.cpp" />
+		<Unit filename="../../src/KE/Rect.h" />
+		<Unit filename="../../src/KE/Renderer.cpp" />
+		<Unit filename="../../src/KE/Renderer.h" />
+		<Unit filename="../../src/KE/Scene.cpp" />
+		<Unit filename="../../src/KE/Scene.h" />
+		<Unit filename="../../src/KE/Sound.cpp" />
+		<Unit filename="../../src/KE/Sound.h" />
+		<Unit filename="../../src/KE/Sprite.cpp" />
+		<Unit filename="../../src/KE/Sprite.h" />
+		<Unit filename="../../src/KE/Surface.cpp" />
+		<Unit filename="../../src/KE/Surface.h" />
+		<Unit filename="../../src/KE/Texture.cpp" />
+		<Unit filename="../../src/KE/Texture.h" />
+		<Unit filename="../../src/KE/Tools.cpp" />
+		<Unit filename="../../src/KE/Tools.h" />
+		<Unit filename="../../src/KE/Video.h" />
+		<Unit filename="../../src/KE/Window.cpp" />
+		<Unit filename="../../src/KE/Window.h" />
+		<Unit filename="../../src/KE/tinydir.h" />
+		<Unit filename="../../src/KE/tinyxml2.cpp" />
+		<Unit filename="../../src/KE/tinyxml2.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

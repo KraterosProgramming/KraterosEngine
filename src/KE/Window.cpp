@@ -12,6 +12,7 @@ Window::Window()
 Window::~Window()
 {
     unload();
+    Log() << "window closed";
 }
 
 void Window::load(SDL_Window *window)
@@ -49,6 +50,23 @@ bool Window::create(int w, int h, const std::string &title)
         load(created);
     }
     return created;
+}
+
+Point Window::getSize() const
+{
+    Point p;
+    SDL_GetWindowSize(sdlWindow, &p.x, &p.y);
+    return p;
+}
+
+void Window::setSize(const Point &p)
+{
+    SDL_SetWindowSize(sdlWindow, p.x, p.y);
+}
+
+void Window::setTitle(const std::string &title)
+{
+    SDL_SetWindowTitle(sdlWindow, title.c_str());
 }
 
 }

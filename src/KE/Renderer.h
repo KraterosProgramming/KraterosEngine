@@ -11,14 +11,14 @@ namespace KE
 class Renderer
 {
     SDL_Renderer *sdlRenderer;
+    const Window *window;
 
     bool setColor(const Color &color);
 
-    void load(SDL_Renderer *sdlRenderer);
+    void load(SDL_Renderer *sdlRenderer, const Window *window);
     void unload();
 
 protected:
-    friend class App;
     friend class Game;
 
     Renderer();
