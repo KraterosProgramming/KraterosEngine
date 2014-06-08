@@ -13,6 +13,11 @@ Circle::Circle(int x, int y, double radius) : Point(x, y)
     this->radius = radius;
 }
 
+Circle::operator bool() const
+{
+    return radius;
+}
+
 const Circle Circle::move(const Point &p) const
 {
     return Circle(x + p.x, y + p.y, radius);

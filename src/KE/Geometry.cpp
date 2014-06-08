@@ -8,8 +8,6 @@ namespace KE
 namespace Geometry
 {
 
-// TODO: collides lines
-
 bool collides(const Point &a, const Point &b)
 {
     return a == b;
@@ -37,7 +35,8 @@ bool collides(const Line &a, const Line &b)
 
 bool collides(const Line &l, const Rect &r)
 {
-    return false;
+    Line l2 (l);
+    return SDL_IntersectRectAndLine(r, &l2.a.x, &l2.a.y, &l2.b.x, &l2.b.y);
 }
 
 bool collides(const Line &l, const Circle &c)
@@ -59,6 +58,25 @@ bool collides(const Circle &a, const Circle &b)
 {
     int maxDist = a.radius + b.radius;
     return (a.getPosition() - b.getPosition()).getSquaredLength() <= maxDist * maxDist;
+}
+
+Line intersect(const Line &a, const Line &b)
+{
+    return Line(0, 0, 0, 0);
+}
+
+Line intersect(const Line &l, const Rect &r)
+{
+    Line intersection (l);
+    SDL_IntersectRectAndLine(r, &intersection.a.x, &intersection.a.y, &intersection.b.x, &intersection.b.y);
+    return intersection;
+}
+
+Rect intersect(const Rect &a, const Rect &b)
+{
+    Rect intersection;
+    SDL_IntersectRect(a, b, intersection);
+    return intersection;
 }
 
 }

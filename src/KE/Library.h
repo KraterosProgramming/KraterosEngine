@@ -5,9 +5,10 @@
 #include "Collection.h"
 #include "Texture.h"
 #include "Sprite.h"
+#include "Cursor.h"
 #include "Music.h"
 #include "Sound.h"
-#include "Cursor.h"
+#include "Font.h"
 
 namespace KE
 {

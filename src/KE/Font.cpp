@@ -59,42 +59,34 @@ bool Font::loadFromFile(const std::string &path)
     return false;
 }
 
-SDL_Surface* Font::renderText(const std::string &text, const Color &color)
+bool Font::renderOnSurface(Surface &out, const std::string &text, const Color &color) const
 {
     SDL_Surface* rendered = TTF_RenderText_Solid(sdlFont, (text == "" ? " " : text).c_str(), color);
     if (!rendered)
     {
         Error() << "rendering text \"" << text << "\": " << TTF_GetError();
     }
+    else
+    {
+        out.create(rendered);
+    }
     return rendered;
 }
 
-bool Font::renderLines(const std::string &text, const Color &color, std::vector<SDL_Surface*> vec)
+bool Font::renderOnTexture(Texture &out, const std::string &text, const Color &color) const
 {
-    bool ok = true;
-    std::string::size_type begin = 0, end = 0;
-    std::string line = "";
-
-    while (begin != text.size())
+    bool ok = false;
+    Surface surface;
+    if (!renderOnSurface(surface, text, color))
     {
-        end = text.find_first_of('\n', begin);
-        line = text.substr(begin, end);
-        SDL_Surface* surface = renderText(line, color);
-        if (!surface)
-        {
-            ok = false;
-        }
-        else
-        {
-            vec.push_back(surface);
-        }
+        Error() << "could not render on texture";
+    }
+    else
+    {
+        ok = out.loadFromSurface(surface);
     }
     return ok;
-}
 
-std::string Font::getName()
-{
-    return "Font";
 }
 
 }

@@ -27,6 +27,11 @@ Line::Line(const Point &a, const Point &b)
     this->b = b;
 }
 
+Line::operator bool() const
+{
+    return a != b;
+}
+
 double Line::getRadians() const
 {
     return (b - a).getRadians();

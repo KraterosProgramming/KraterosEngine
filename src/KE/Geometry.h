@@ -25,6 +25,10 @@ bool collides(const Rect &r, const Circle &c);
 
 bool collides(const Circle &a, const Circle &b);
 
+Line intersect(const Line &a, const Line &b);
+Line intersect(const Line &l, const Rect &r);
+Rect intersect(const Rect &a, const Rect &b);
+
 }
 
 }

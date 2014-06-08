@@ -1,9 +1,9 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <string>
+#include <vector>
 
 #include "Rect.h"
-#include "Font.h"
 
 namespace KE
 {
@@ -15,22 +15,16 @@ class Surface
     void load(SDL_Surface* sdlSurface);
     void unload();
 
-protected:
-    friend class Library;
-    friend class Renderer;
-    friend class Texture;
-
+public:
     Surface();
     ~Surface();
 
-    bool create(int w, int h, const SDL_PixelFormat* format);
-    bool create(int w, int h, int depth, char* pixels);
+    bool create(const Point &size, const SDL_PixelFormat* format);
+    bool create(const Point &size, int depth, char* pixels);
+    void create(SDL_Surface* sdlSurface);
     bool loadFromFile(const std::string &path);
-    bool renderText(const Font &font, const std::string &text, const Color &color);
 
-public:
-    int getWidth() const;
-    int getHeight() const;
+    const Point getSize() const;
     const SDL_PixelFormat *getFormat() const;
     operator SDL_Surface*() const;
 

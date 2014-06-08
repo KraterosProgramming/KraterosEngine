@@ -9,6 +9,7 @@ namespace KE
 
 class Scene
 {
+    template<bool frontFirst>
     class ObjectSorter
     {
     public:
@@ -19,7 +20,6 @@ class Scene
     };
 
     using ObjectList = std::list<Object*>;
-    using ObjectQueue = std::priority_queue<Object*, std::vector<Object*>, ObjectSorter>;
 
     ObjectList objects;
 
@@ -29,18 +29,22 @@ protected:
     friend class Game;
 
     Scene();
-    ~Scene();
+    virtual ~Scene();
 
-    void makeDrawQueue(ObjectQueue &oq);
     void transferTo(Scene &s);
     void receive(ObjectList &ol);
 
+    void add(Object* o);
     Object *findObject(const std::string &keyname) const;
 
 public:
     void start();
-    void exit();
-    void rearrange();
+    void close();
+    void arrange();
+
+    virtual void onStart() { }
+    virtual void onClose() { }
+    virtual void onArrange() { }
 };
 
 }

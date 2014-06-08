@@ -44,11 +44,6 @@ bool Sound::loadFromFile(const std::string &path)
     return loaded;
 }
 
-std::string Sound::getName()
-{
-    return "Sound";
-}
-
 void Sound::play(int channel, int fadeInMS)
 {
      Mix_FadeInChannel(channel, mixChunk, 0, fadeInMS);

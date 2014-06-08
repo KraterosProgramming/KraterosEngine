@@ -36,14 +36,19 @@ public:
     int getZ() const;
     void setZ(int z);
 
+    void start();
+    void death();
+    void think();
     void update();
-    virtual void onUpdate() { }
-
     void draw();
-    virtual void onDraw() { }
+    void arrange();
 
-    void rearrange();
-    virtual void onRearrange() { }
+    virtual void onStart() { }
+    virtual void onDeath() { }
+    virtual void onThink() { }
+    virtual void onUpdate() { }
+    virtual void onDraw() { }
+    virtual void onArrange() { }
 };
 
 }

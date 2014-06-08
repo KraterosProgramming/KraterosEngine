@@ -15,15 +15,11 @@ class Sound
     void load(Mix_Chunk *mixChunk);
     void unload();
 
-protected:
-    friend class Collection<Sound>;
+public:
     Sound();
     ~Sound();
 
     bool loadFromFile(const std::string &path);
-
-public:
-    static std::string getName();
 
     void play(int channel, int fadeInMS = 0);
     void loop(int channel, int fadeInMS = 0);

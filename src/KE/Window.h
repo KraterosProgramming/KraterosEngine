@@ -16,18 +16,19 @@ class Window
 
 protected:
     friend class Game;
+    friend class Renderer;
 
     Window();
     ~Window();
 
     bool create(int w, int h, const std::string &title);
 
-public:
-    operator SDL_Window*() const;
-
     Point getSize() const;
     void setSize(const Point &p);
     void setTitle(const std::string &title);
+
+public:
+    operator SDL_Window*() const;
 };
 
 }

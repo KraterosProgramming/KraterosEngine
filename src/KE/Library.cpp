@@ -6,19 +6,19 @@ namespace KE
 Library Library::library;
 
 Library::Library() :
-    textures({"jpg", "png"}),
-    sprites({"sprite"}),
-    cursors({"cursor"}),
-    musics({"ogg"}),
-    sounds({"ogg"}),
-    fonts({"font"})
+    textures("Textures", {"jpg", "png"}),
+    sprites("Sprites", {"sprite"}),
+    cursors("Cursors", {"cursor"}),
+    musics("Musics", {"ogg"}),
+    sounds("Sounds", {"ogg"}),
+    fonts("Fonts", {"font"})
 {
 
 }
 
 Library::~Library()
 {
-    Log() << "library closed";
+    Log() << "closing library";
 }
 
 bool Library::loadTextures(const std::string &directory)

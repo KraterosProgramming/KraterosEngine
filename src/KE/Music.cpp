@@ -44,11 +44,6 @@ bool Music::loadFromFile(const std::string &path)
     return loaded;
 }
 
-std::string Music::getName()
-{
-    return "Music";
-}
-
 void Music::play(int fadeInMS)
 {
     Mix_FadeInMusic(mixMusic, 0, fadeInMS);

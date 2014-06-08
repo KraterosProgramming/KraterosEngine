@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 
 #include "Window.h"
+#include "Color.h"
 #include "Texture.h"
 #include "Geometry.h"
 

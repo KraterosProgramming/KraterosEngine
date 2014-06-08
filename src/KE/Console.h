@@ -1,9 +1,6 @@
 #pragma once
 #include <iostream>
-
-#define LOG_FILE        std::clog
-#define WARNING_FILE    std::cerr
-#define ERROR_FILE      std::cerr
+#include <fstream>
 
 namespace KE
 {
@@ -11,6 +8,15 @@ namespace KE
 class Console
 {
 protected:
+#ifdef KRATEROS_ENGINE_RELEASE
+    static std::ofstream logFile;
+    static std::ofstream warningFile;
+    static std::ofstream errorFile;
+#else
+    static std::ostream &logFile;
+    static std::ostream &warningFile;
+    static std::ostream &errorFile;
+#endif // KRATEROS_ENGINE_RELEASE
     std::ostream &file;
 
 public:

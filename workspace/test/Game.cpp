@@ -1,16 +1,20 @@
 #include "Game.h"
+#include "Scene1.h"
 
-Game::Game() : KE::Game(800, 500, "Hello World")
+Game::Game() : KE::Game(KE::Point(800, 500), "Hello World")
 {
 
 }
 
-void Game::onStart()
+int Game::onStart()
 {
     KE::Log() << "yay";
+    startScene(new Scene1());
+    return 0;
 }
 
-void Game::onExit()
+bool Game::onExit()
 {
     KE::Log() << "lol";
+    return true;
 }

@@ -26,6 +26,16 @@ Point::operator SDL_Point*() const
     return (SDL_Point*)(this);
 }
 
+Point::operator bool() const
+{
+    return x != 0 && y != 0;
+}
+
+const Point Point::operator- () const
+{
+    return Point(-x, -y);
+}
+
 const Point Point::operator+ (const Point &o) const
 {
     return Point(x + o.x, y + o.y);
@@ -72,6 +82,16 @@ Point &Point::operator/ (float f)
     x /= f;
     y /= f;
     return *this;
+}
+
+bool Point::operator== (const Point &o) const
+{
+    return x == o.x && y == o.y;
+}
+
+bool Point::operator!= (const Point &o) const
+{
+    return x != o.x || y != o.y;
 }
 
 double Point::getRadians() const

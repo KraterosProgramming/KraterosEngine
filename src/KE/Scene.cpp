@@ -25,11 +25,6 @@ void Scene::unload()
     objects.clear();
 }
 
-void Scene::makeDrawQueue(ObjectQueue &oq)
-{
-
-}
-
 void Scene::transferTo(Scene &s)
 {
     s.receive(objects);
@@ -38,6 +33,11 @@ void Scene::transferTo(Scene &s)
 void Scene::receive(ObjectList &ol)
 {
     objects.splice(objects.end(), ol);
+}
+
+void Scene::add(Object* o)
+{
+    objects.push_back(o);
 }
 
 Object *Scene::findObject(const std::string &keyname) const
@@ -51,6 +51,33 @@ Object *Scene::findObject(const std::string &keyname) const
         }
     }
     return found;
+}
+
+void Scene::start()
+{
+    onStart();
+}
+
+void Scene::close()
+{
+    onClose();
+}
+
+void Scene::arrange()
+{
+    onArrange();
+}
+
+template<>
+bool Scene::ObjectSorter<false>::operator() (const Object *a, const Object *b) const
+{
+    return a->getZ() > b->getZ();
+}
+
+template<>
+bool Scene::ObjectSorter<true>::operator() (const Object *a, const Object *b) const
+{
+    return a->getZ() < b->getZ();
 }
 
 }

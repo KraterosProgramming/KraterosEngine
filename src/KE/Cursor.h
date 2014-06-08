@@ -7,21 +7,18 @@
 namespace KE
 {
 
-template<class> class Collection;
-
 class Cursor
 {
-public:
-    using Type = SDL_SystemCursor;
-
-private:
     SDL_Cursor* sdlCursor;
 
     void load(SDL_Cursor* sdlCursor);
     void unload();
 
-protected:
-    friend class Collection<Cursor>;
+public:
+    static std::string getName();
+
+    using Type = SDL_SystemCursor;
+
     Cursor();
     ~Cursor();
 
@@ -31,9 +28,6 @@ protected:
     bool createFromSurface(const Surface &surface, const Point &p);
     bool createFromSystem(Type type);
     bool loadFromFile(const std::string &path);
-
-public:
-    static std::string getName();
 
     operator SDL_Cursor*() const;
 

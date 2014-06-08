@@ -1,6 +1,6 @@
 # depslib dependency file v1.0
-1402075112 source:c:\users\eric\documents\github\kraterosengine\workspace\test\main.cpp
-	<KE/KE.h>
+1402089918 source:c:\users\eric\documents\github\kraterosengine\workspace\test\main.cpp
+	"Game.h"
 
 1402075210 c:\users\eric\documents\github\kraterosengine\src\ke\ke.h
 	"Tools.h"
@@ -8,7 +8,7 @@
 	"Library.h"
 	"Game.h"
 
-1402004145 c:\users\eric\documents\github\kraterosengine\src\ke\tools.h
+1402180370 c:\users\eric\documents\github\kraterosengine\src\ke\tools.h
 	<algorithm>
 	<ctime>
 	<cstdlib>
@@ -31,8 +31,9 @@
 	<android/log.h>
 	<assert.h>
 
-1402007618 c:\users\eric\documents\github\kraterosengine\src\ke\console.h
+1402181552 c:\users\eric\documents\github\kraterosengine\src\ke\console.h
 	<iostream>
+	<fstream>
 
 1401985671 c:\users\eric\documents\github\kraterosengine\src\ke\input.h
 	"Keyboard.h"
@@ -54,23 +55,23 @@
 	<string>
 	"Tools.h"
 
-1402005558 c:\users\eric\documents\github\kraterosengine\src\ke\texture.h
+1402186461 c:\users\eric\documents\github\kraterosengine\src\ke\texture.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<string>
 	"Surface.h"
 
-1401986719 c:\users\eric\documents\github\kraterosengine\src\ke\surface.h
+1402186529 c:\users\eric\documents\github\kraterosengine\src\ke\surface.h
 	<SDL2/SDL.h>
 	<string>
 	"Rect.h"
 	"Font.h"
 
-1401980367 c:\users\eric\documents\github\kraterosengine\src\ke\rect.h
+1402186654 c:\users\eric\documents\github\kraterosengine\src\ke\rect.h
 	<SDL2/SDL.h>
 	"Point.h"
 
-1401981494 c:\users\eric\documents\github\kraterosengine\src\ke\point.h
+1402180435 c:\users\eric\documents\github\kraterosengine\src\ke\point.h
 	<SDL2/SDL.h>
 
 1402005815 c:\users\eric\documents\github\kraterosengine\src\ke\font.h
@@ -83,7 +84,7 @@
 1401980388 c:\users\eric\documents\github\kraterosengine\src\ke\color.h
 	<SDL2/SDL.h>
 
-1402005595 c:\users\eric\documents\github\kraterosengine\src\ke\sprite.h
+1402172337 c:\users\eric\documents\github\kraterosengine\src\ke\sprite.h
 	"Texture.h"
 	"Rect.h"
 
@@ -102,42 +103,63 @@
 	"Surface.h"
 	"Point.h"
 
-1402089718 c:\users\eric\documents\github\kraterosengine\src\ke\game.h
+1402184073 c:\users\eric\documents\github\kraterosengine\src\ke\game.h
 	"Scene.h"
 	"Window.h"
 	"Renderer.h"
 
-1402074700 c:\users\eric\documents\github\kraterosengine\src\ke\scene.h
+1402183580 c:\users\eric\documents\github\kraterosengine\src\ke\scene.h
 	<list>
 	<queue>
 	"Object.h"
 
-1402007230 c:\users\eric\documents\github\kraterosengine\src\ke\object.h
+1402179891 c:\users\eric\documents\github\kraterosengine\src\ke\object.h
 	<string>
 	"Geometry.h"
 
-1401978669 c:\users\eric\documents\github\kraterosengine\src\ke\geometry.h
+1402173304 c:\users\eric\documents\github\kraterosengine\src\ke\geometry.h
 	"Point.h"
 	"Rect.h"
 	"Line.h"
 	"Circle.h"
 
-1401980357 c:\users\eric\documents\github\kraterosengine\src\ke\line.h
+1402180082 c:\users\eric\documents\github\kraterosengine\src\ke\line.h
 	<SDL2/SDL.h>
 	"Point.h"
 	"Rect.h"
 
-1401980346 c:\users\eric\documents\github\kraterosengine\src\ke\circle.h
+1402180124 c:\users\eric\documents\github\kraterosengine\src\ke\circle.h
 	"Point.h"
 	"Rect.h"
 
-1402089475 c:\users\eric\documents\github\kraterosengine\src\ke\window.h
+1402183973 c:\users\eric\documents\github\kraterosengine\src\ke\window.h
 	<SDL2/SDL.h>
 	<string>
+	"Point.h"
 
-1402074946 c:\users\eric\documents\github\kraterosengine\src\ke\renderer.h
+1402090532 c:\users\eric\documents\github\kraterosengine\src\ke\renderer.h
 	<SDL2/SDL.h>
 	"Window.h"
 	"Texture.h"
 	"Geometry.h"
+
+1402182878 source:c:\users\eric\documents\github\kraterosengine\workspace\test\game.cpp
+	"Game.h"
+	"Scene1.h"
+
+1402182537 c:\users\eric\documents\github\kraterosengine\workspace\test\game.h
+	<KE/KE.h>
+
+1402183459 c:\users\eric\documents\github\kraterosengine\workspace\test\scene1.h
+	<KE/KE.h>
+
+1402183090 source:c:\users\eric\documents\github\kraterosengine\workspace\test\object1.cpp
+	"Object1.h"
+
+1402182945 c:\users\eric\documents\github\kraterosengine\workspace\test\object1.h
+	<KE/KE.h>
+
+1402183499 source:c:\users\eric\documents\github\kraterosengine\workspace\test\scene1.cpp
+	"Scene1.h"
+	"Object1.h"
 

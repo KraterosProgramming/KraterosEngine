@@ -9,11 +9,12 @@ namespace KE
 template<class T>
 class Collection
 {
+    std::string name;
     std::map<std::string, T*> collection;
     std::vector<std::string> extensions;
 
 public:
-    Collection(std::initializer_list<std::string> extensions);
+    Collection(const std::string &name, std::initializer_list<std::string> extensions);
     ~Collection();
 
     bool loadFromFile(const std::string &path, const std::string &keyname);
@@ -22,8 +23,9 @@ public:
 };
 
 template<class T>
-Collection<T>::Collection(std::initializer_list<std::string> extensions)
+Collection<T>::Collection(const std::string &name, std::initializer_list<std::string> extensions)
 {
+    this->name = name;
     this->extensions = extensions;
 }
 
@@ -62,8 +64,7 @@ bool Collection<T>::loadDirectory(const std::string &directory)
     std::vector<std::string> files;
     if (!getFilesInDirectory(directory, files, extensions))
     {
-        Warning() << "could not load any " << T::getName();
-        ok = false;
+        Warning() << "could not find any proper file for " << name << " in directory " << directory;
     }
     else
     {

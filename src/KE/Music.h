@@ -6,8 +6,6 @@
 namespace KE
 {
 
-template<class> class Collection;
-
 class Music
 {
     Mix_Music *mixMusic;
@@ -15,15 +13,11 @@ class Music
     void load(Mix_Music *mixMusic);
     void unload();
 
-protected:
-    friend class Collection<Music>;
+public:
     Music();
     ~Music();
 
     bool loadFromFile(const std::string &path);
-
-public:
-    static std::string getName();
 
     void play(int fadeInMS = 0);
     void loop(int fadeInMS = 0);

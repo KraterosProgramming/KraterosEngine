@@ -83,14 +83,34 @@ void Object::setZ(int z)
     this->z = z;
 }
 
+void Object::start()
+{
+    onStart();
+}
+
+void Object::death()
+{
+    onDeath();
+}
+
+void Object::think()
+{
+    onThink();
+}
+
 void Object::update()
 {
-    // TODO: Object::update
+    onUpdate();
 }
 
 void Object::draw()
 {
-    // TODO: Object::draw
+    onDraw();
+}
+
+void Object::arrange()
+{
+    onArrange();
 }
 
 }

@@ -14,7 +14,7 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
     unload();
-    Log() << "renderer closed";
+    Log() << "closing renderer";
 }
 
 void Renderer::load(SDL_Renderer *sdlRenderer, const Window *window)
@@ -159,14 +159,14 @@ bool Renderer::captureScreen()
         Point size = window->getSize();
 
         char pixels[size.x * size.y * 3];
-        if (SDL_RenderReadPixels(Game::getRenderer(), NULL, 0, pixels, 3*size.x) < 0)
+        if (SDL_RenderReadPixels(sdlRenderer, NULL, 0, pixels, 3*size.x) < 0)
         {
             Error() << "reading screen pixels: " << SDL_GetError();
         }
         else
         {
             Surface screen;
-            if (!screen.create(size.x, size.y, 24, pixels))
+            if (!screen.create(size, 24, pixels))
             {
                 Error() << "taking a screen shot: " << SDL_GetError();
             }

@@ -9,9 +9,13 @@ class Rect : public SDL_Rect
 {
 public:
     Rect();
+    Rect(int w, int h);
+    Rect(const Point &size);
     Rect(int x, int y, int w, int h);
+    Rect(const Point &position, const Point &size);
 
     operator SDL_Rect*() const;
+    operator bool() const;
 
     const Rect move(const Point &p) const;
     const Rect grow(const Point &p) const;

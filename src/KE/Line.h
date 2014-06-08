@@ -17,6 +17,8 @@ public:
     Line(int x1, int y1, int x2, int y2);
     Line(const Point &a, const Point &b);
 
+    operator bool() const;
+
     double getRadians() const;
     double getLength() const;
     double getSqaredLength() const;

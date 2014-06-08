@@ -15,14 +15,10 @@ Surface::~Surface()
     unload();
 }
 
-int Surface::getWidth() const
-{
-    return sdlSurface->w;
-}
 
-int Surface::getHeight() const
+const Point Surface::getSize() const
 {
-    return sdlSurface->h;
+    return Point(sdlSurface->w, sdlSurface->h);
 }
 
 const SDL_PixelFormat *Surface::getFormat() const
@@ -50,9 +46,9 @@ void Surface::unload()
     }
 }
 
-bool Surface::create(int w, int h, const SDL_PixelFormat* format)
+bool Surface::create(const Point &size, const SDL_PixelFormat* format)
 {
-    SDL_Surface *created = SDL_CreateRGBSurface(0, w, h, format->BitsPerPixel, format->Rmask, format->Gmask, format->Bmask, format->Amask);
+    SDL_Surface *created = SDL_CreateRGBSurface(0, size.x, size.y, format->BitsPerPixel, format->Rmask, format->Gmask, format->Bmask, format->Amask);
     if (!created)
     {
         Error() << "creating surface: " << SDL_GetError();
@@ -64,9 +60,9 @@ bool Surface::create(int w, int h, const SDL_PixelFormat* format)
     return created;
 }
 
-bool Surface::create(int w, int h, int depth, char* pixels)
+bool Surface::create(const Point &size, int depth, char* pixels)
 {
-    SDL_Surface *created = SDL_CreateRGBSurfaceFrom(pixels, w, h, depth, w * depth, 0, 0, 0, 0);
+    SDL_Surface *created = SDL_CreateRGBSurfaceFrom(pixels, size.x, size.y, depth, size.x * depth, 0, 0, 0, 0);
     if (!created)
     {
         Error() << "creating surface from pixels: " << SDL_GetError();
@@ -76,6 +72,11 @@ bool Surface::create(int w, int h, int depth, char* pixels)
         load(created);
     }
     return created;
+}
+
+void Surface::create(SDL_Surface* sdlSurface)
+{
+    load(sdlSurface);
 }
 
 bool Surface::loadFromFile(const std::string &path)
@@ -90,20 +91,6 @@ bool Surface::loadFromFile(const std::string &path)
         load(loaded);
     }
     return loaded;
-}
-
-bool Surface::renderText(const Font &font, const std::string &text, const Color &color)
-{
-    SDL_Surface *rendered = TTF_RenderText_Solid(font, text.c_str(), color);
-    if (!rendered)
-    {
-        Error() << "rendering text: " << TTF_GetError();
-    }
-    else
-    {
-        load(rendered);
-    }
-    return rendered;
 }
 
 bool Surface::blit(Surface &destiny, const Rect &rect) const

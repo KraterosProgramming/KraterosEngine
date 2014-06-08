@@ -13,6 +13,8 @@ public:
     Circle();
     Circle(int x, int y, double radius);
 
+    operator bool() const;
+
     const Circle move(const Point &p) const;
     const Circle grow(double radius) const;
 

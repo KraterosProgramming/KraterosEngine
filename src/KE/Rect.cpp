@@ -11,6 +11,22 @@ Rect::Rect()
     this->h = 0;
 }
 
+Rect::Rect(int w, int h)
+{
+    this->x = 0;
+    this->y = 0;
+    this->w = w;
+    this->h = h;
+}
+
+Rect::Rect(const Point &size)
+{
+    this->x = 0;
+    this->y = 0;
+    this->w = size.x;
+    this->h = size.y;
+}
+
 Rect::Rect(int x, int y, int w, int h)
 {
     this->x = x;
@@ -19,9 +35,22 @@ Rect::Rect(int x, int y, int w, int h)
     this->h = h;
 }
 
+Rect::Rect(const Point &position, const Point &size)
+{
+    this->x = position.x;
+    this->y = position.y;
+    this->w = size.x;
+    this->h = size.y;
+}
+
 Rect::operator SDL_Rect*() const
 {
     return (SDL_Rect*)(this);
+}
+
+Rect::operator bool() const
+{
+    return w != 0 && h != 0;
 }
 
 const Rect Rect::move(const Point &p) const

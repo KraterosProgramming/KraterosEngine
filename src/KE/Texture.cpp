@@ -8,8 +8,6 @@ namespace KE
 Texture::Texture()
 {
     this->sdlTexture = nullptr;
-    this->w = 0;
-    this->h = 0;
 }
 
 Texture::~Texture()
@@ -17,12 +15,11 @@ Texture::~Texture()
 	unload();
 }
 
-void Texture::load(SDL_Texture* sdlTexture, int w, int h)
+void Texture::load(SDL_Texture* sdlTexture, const Point &size)
 {
     unload();
     this->sdlTexture = sdlTexture;
-    this->w = w;
-    this->h = h;
+    this->size = size;
 }
 
 void Texture::unload()
@@ -31,8 +28,7 @@ void Texture::unload()
     {
         SDL_DestroyTexture(sdlTexture);
         sdlTexture = nullptr;
-        w = 0;
-        h = 0;
+        size = Point(0, 0);
     }
 }
 
@@ -51,37 +47,9 @@ bool Texture::loadFromSurface(const Surface &surface)
     }
     else
     {
-        load(created, surface.getWidth(), surface.getHeight());
+        load(created, surface.getSize());
     }
     return created;
-}
-
-bool Texture::loadFromSurfaceVec(const std::vector<Surface> &surfaces)
-{
-    bool loaded = false;
-    int w = 0, h = 0;
-    for (auto &surface : surfaces)
-    {
-        w = std::max(w, surface.getWidth());
-        h += surface.getHeight();
-    }
-
-    Surface made;
-    if (made.create(w, h, surfaces[0].getFormat()))
-    {
-        Rect rect(0, 0, w, 0);
-        for (auto &surface : surfaces)
-        {
-            rect.h = surface.getHeight();
-            if (surface.blit(made, rect))
-            {
-                rect.y += rect.h;
-            }
-        }
-
-        loaded = loadFromSurface(made);
-    }
-    return loaded;
 }
 
 bool Texture::loadFromFile(const std::string &path)
@@ -95,15 +63,14 @@ bool Texture::loadFromFile(const std::string &path)
     return loaded;
 }
 
-bool Texture::renderText(const Font &font, const std::string &text, const Color &color)
+const Point Texture::getSize() const
 {
-    bool loaded = false;
-    Surface rendered;
-    if (rendered.renderText(font, text, color))
-    {
-        loaded = loadFromSurface(rendered);
-    }
-    return loaded;
+    return size;
+}
+
+const Rect Texture::getClip() const
+{
+    return Rect().grow(size);
 }
 
 std::string Texture::getName()

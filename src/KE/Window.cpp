@@ -12,7 +12,7 @@ Window::Window()
 Window::~Window()
 {
     unload();
-    Log() << "window closed";
+    Log() << "closing window";
 }
 
 void Window::load(SDL_Window *window)

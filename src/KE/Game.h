@@ -14,7 +14,7 @@ namespace KE
 
 class Game
 {
-    int w, h;
+    Point startingSize;
     std::string title;
     int audioFrequency, audioChunkSize;
 
@@ -31,25 +31,29 @@ class Game
     void loop();
 
 protected:
-    Game(int w, int h, const std::string &title);
-    Game(int w, int h, const std::string &title, int audioFrequency, int audioChunkSize);
+    Game(const Point &startingSize, const std::string &title);
+    Game(const Point &startingSize, const std::string &title, int audioFrequency, int audioChunkSize);
     virtual ~Game();
 
 public:
     static const int defaultAudioFrequency;
     static const int defaultAudioChunkSize;
 
+    static int getResult();
+
+    static const Point getWindowSize();
+    static void setWindowSize(const Point &size);
+
+    static Renderer &getRenderer();
+
     void start();
     static void exit();
     static void exit(int errorCode);
 
-    virtual void onStart() = 0;
-    virtual void onExit() = 0;
+    virtual int onStart() = 0;  // return error code, or 0 if OK
+    virtual bool onExit() = 0;  // return false for cancel exit
 
-    static int getResult();
-    static Window &getWindow();
-    static Renderer &getRenderer();
-
+    static void add(Object* o);
     static Object *findObject(const std::string &keyname);
 
     static void startScene(Scene *scene);

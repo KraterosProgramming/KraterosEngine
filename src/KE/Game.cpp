@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "Tools.h"
 
@@ -12,10 +13,9 @@ Game *Game::game = nullptr;
 const int Game::defaultAudioFrequency = 44100;
 const int Game::defaultAudioChunkSize = 1024;
 
-Game::Game(int w, int h, const std::string &title, int audioFrequency, int audioChunkSize)
+Game::Game(const Point &startingSize, const std::string &title, int audioFrequency, int audioChunkSize)
 {
-    this->w = w;
-    this->h = h;
+    this->startingSize = startingSize;
     this->title = title;
     this->audioFrequency = audioFrequency;
     this->audioChunkSize = audioChunkSize;
@@ -31,10 +31,9 @@ Game::Game(int w, int h, const std::string &title, int audioFrequency, int audio
     game = this;
 }
 
-Game::Game(int w, int h, const std::string &title)
+Game::Game(const Point &startingSize, const std::string &title)
 {
-    this->w = w;
-    this->h = h;
+    this->startingSize = startingSize;
     this->title = title;
     this->audioFrequency = defaultAudioFrequency;
     this->audioChunkSize = defaultAudioChunkSize;
@@ -53,7 +52,7 @@ Game::Game(int w, int h, const std::string &title)
 Game::~Game()
 {
     quit();
-    Log() << "game closed";
+    Log() << "closing game";
 }
 
 int Game::getResult()
@@ -61,9 +60,15 @@ int Game::getResult()
     return game->result;
 }
 
-Window &Game::getWindow()
+const Point Game::getWindowSize()
 {
-    return game->window;
+    return game->window.getSize();
+}
+
+void Game::setWindowSize(const Point &size)
+{
+    game->window.setSize(size);
+    game->scene->arrange();
 }
 
 Renderer &Game::getRenderer()
@@ -110,9 +115,9 @@ bool Game::init()
                     else
                     {
                         Log() << "audio opened";
-                        if (!window.create(w, h, title))
+                        if (!window.create(startingSize.x, startingSize.y, title))
                         {
-                            Error() << "creating window " << w << "x" << h << ": " << SDL_GetError();
+                            Error() << "creating window " << startingSize.x << "x" << startingSize.y << ": " << SDL_GetError();
                         }
                         else
                         {
@@ -123,7 +128,7 @@ bool Game::init()
                             }
                             else
                             {
-                                result = 0;
+                                result = onStart();
                             }
                         }
                     }
@@ -137,7 +142,13 @@ bool Game::init()
 
 void Game::quit()
 {
-    Log() << "closing libraries...";
+    if (scene)
+    {
+        delete scene;
+        scene = nullptr;
+    }
+
+    Log() << "closing dynamic libraries...";
     Mix_CloseAudio();
     Mix_Quit();
     TTF_Quit();
@@ -152,9 +163,13 @@ void Game::loop()
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            if (event.type == SDL_QUIT)
+            switch (event.type)
             {
-                mustQuit = true;
+                case SDL_QUIT:
+                {
+                    exit();
+                }
+                break;
             }
         }
 
@@ -177,13 +192,18 @@ void Game::start()
 
 void Game::exit()
 {
-    game->mustQuit = true;
+    game->mustQuit = game->onExit();
 }
 
 void Game::exit(int errorCode)
 {
     game->result = errorCode;
-    game->mustQuit = true;
+    game->mustQuit = game->onExit();
+}
+
+void Game::add(Object* o)
+{
+    game->scene->add(o);
 }
 
 Object *Game::findObject(const std::string &keyname)
@@ -195,9 +215,11 @@ void Game::startScene(Scene *scene)
 {
     if (game->scene)
     {
+        scene->close();
         delete game->scene;
     }
     game->scene = scene;
+    scene->start();
 }
 
 void Game::combineScene(Scene *scene)
