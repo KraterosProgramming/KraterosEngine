@@ -1,0 +1,170 @@
+# depslib dependency file v1.0
+1402285069 source:c:\users\eric\documents\github\kraterosengine\src\test_input\main.cpp
+	"InputTest.h"
+
+1402285466 c:\users\eric\documents\github\kraterosengine\src\test_input\inputtest.h
+	<KE/KE.h>
+	"InputScene.h"
+
+1402075210 c:\users\eric\documents\github\kraterosengine\src\engine\ke\ke.h
+	"Tools.h"
+	"Input.h"
+	"Library.h"
+	"Game.h"
+
+1402267543 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tools.h
+	<algorithm>
+	<ctime>
+	<cstdlib>
+	"tinyxml2.h"
+	"Console.h"
+	"Instance.h"
+
+1402257667 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tinyxml2.h
+	<ctype.h>
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdarg.h>
+	<cctype>
+	<climits>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<cstdarg>
+	<android/log.h>
+	<assert.h>
+
+1402181552 c:\users\eric\documents\github\kraterosengine\src\engine\ke\console.h
+	<iostream>
+	<fstream>
+
+1402276354 c:\users\eric\documents\github\kraterosengine\src\engine\ke\instance.h
+	"Pointer.h"
+
+1402276306 c:\users\eric\documents\github\kraterosengine\src\engine\ke\pointer.h
+	"Object.h"
+
+1402275240 c:\users\eric\documents\github\kraterosengine\src\engine\ke\object.h
+	<string>
+	"Geometry.h"
+
+1402173304 c:\users\eric\documents\github\kraterosengine\src\engine\ke\geometry.h
+	"Point.h"
+	"Rect.h"
+	"Line.h"
+	"Circle.h"
+
+1402180435 c:\users\eric\documents\github\kraterosengine\src\engine\ke\point.h
+	<SDL2/SDL.h>
+
+1402186654 c:\users\eric\documents\github\kraterosengine\src\engine\ke\rect.h
+	<SDL2/SDL.h>
+	"Point.h"
+
+1402180082 c:\users\eric\documents\github\kraterosengine\src\engine\ke\line.h
+	<SDL2/SDL.h>
+	"Point.h"
+	"Rect.h"
+
+1402180124 c:\users\eric\documents\github\kraterosengine\src\engine\ke\circle.h
+	"Point.h"
+	"Rect.h"
+
+1402424811 c:\users\eric\documents\github\kraterosengine\src\engine\ke\input.h
+	<SDL2/SDL.h>
+	<vector>
+	<string>
+	"Point.h"
+
+1402421595 c:\users\eric\documents\github\kraterosengine\src\engine\ke\library.h
+	<map>
+	<string>
+	"Collection.h"
+	"Texture.h"
+	"Tileset.h"
+	"Cursor.h"
+	"Music.h"
+	"Sound.h"
+	"Font.h"
+
+1402421675 c:\users\eric\documents\github\kraterosengine\src\engine\ke\collection.h
+	<map>
+	<string>
+	"Tools.h"
+
+1402199489 c:\users\eric\documents\github\kraterosengine\src\engine\ke\texture.h
+	<SDL2/SDL.h>
+	<string>
+	"Surface.h"
+
+1402199511 c:\users\eric\documents\github\kraterosengine\src\engine\ke\surface.h
+	<SDL2/SDL.h>
+	<string>
+	<vector>
+	"Rect.h"
+
+1402254380 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tileset.h
+	<map>
+	<string>
+	"Texture.h"
+	"Rect.h"
+	"Animation.h"
+
+1402254079 c:\users\eric\documents\github\kraterosengine\src\engine\ke\animation.h
+	<vector>
+	<SDL2/SDL.h>
+
+1402189310 c:\users\eric\documents\github\kraterosengine\src\engine\ke\cursor.h
+	<SDL2/SDL.h>
+	"Surface.h"
+	"Point.h"
+
+1402189352 c:\users\eric\documents\github\kraterosengine\src\engine\ke\music.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
+	<string>
+
+1402189365 c:\users\eric\documents\github\kraterosengine\src\engine\ke\sound.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
+	<string>
+
+1402257583 c:\users\eric\documents\github\kraterosengine\src\engine\ke\font.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<string>
+	<vector>
+	"Color.h"
+	"Texture.h"
+
+1401980388 c:\users\eric\documents\github\kraterosengine\src\engine\ke\color.h
+	<SDL2/SDL.h>
+
+1402425324 c:\users\eric\documents\github\kraterosengine\src\engine\ke\game.h
+	"Scene.h"
+	"Window.h"
+	"Renderer.h"
+
+1402276208 c:\users\eric\documents\github\kraterosengine\src\engine\ke\scene.h
+	<list>
+	<queue>
+	"Object.h"
+	"Tools.h"
+
+1402421735 c:\users\eric\documents\github\kraterosengine\src\engine\ke\window.h
+	<SDL2/SDL.h>
+	<string>
+	"Point.h"
+
+1402421742 c:\users\eric\documents\github\kraterosengine\src\engine\ke\renderer.h
+	<SDL2/SDL.h>
+	"Window.h"
+	"Color.h"
+	"Texture.h"
+	"Geometry.h"
+
+1402425087 c:\users\eric\documents\github\kraterosengine\src\test_input\inputscene.h
+	<KE/KE.h>
+

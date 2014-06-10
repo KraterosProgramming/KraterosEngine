@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="test1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../bin/test-d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../bin" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="KraterosEngine-d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../../bin/test" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../bin" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="KraterosEngine" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add directory="../../src/engine" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="../../lib" />
+		</ResourceCompiler>
+		<Linker>
+			<Add library="mingw32" />
+			<Add library="SDL2_image" />
+			<Add library="SDL2_mixer" />
+			<Add library="SDL2_ttf" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add directory="../../lib" />
+		</Linker>
+		<Unit filename="../../src/test1/Game1.h" />
+		<Unit filename="../../src/test1/Object1.h" />
+		<Unit filename="../../src/test1/Scene1.h" />
+		<Unit filename="../../src/test1/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
