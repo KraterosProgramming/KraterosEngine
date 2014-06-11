@@ -17,35 +17,33 @@ const int Game::subsystems = SDL_INIT_EVERYTHING;
 const int Game::imageTypesSupport = IMG_INIT_JPG|IMG_INIT_PNG;
 const int Game::audioTypesSupport = MIX_INIT_OGG;
 const int Game::audioFormat = MIX_DEFAULT_FORMAT;
+
 const int Game::defaultAudioFrequency = 44100;
 const int Game::defaultAudioChunkSize = 1024;
+const int Game::defaultAudioChannels = 16;
 
-Game::Game(const Point &startingSize, const std::string &title, int audioFrequency, int audioChunkSize)
-{
-    this->startingSize = startingSize;
-    this->title = title;
-    this->audioFrequency = audioFrequency;
-    this->audioChunkSize = audioChunkSize;
-
-    this->scene = nullptr;
-    this->mustQuit = false;
-    this->result = -1;
-    this->ticks = 0;
-    this->deltaTime = 0;
-
-    if (game)
-    {
-        delete game;
-    }
-    game = this;
-}
+const char *Game::defaultTexturesDir = "library/textures/";
+const char *Game::defaultTilesetsDir = "library/tilesets/";
+const char *Game::defaultCursorsDir = "library/cursors/";
+const char *Game::defaultMusicsDir = "library/musics/";
+const char *Game::defaultSoundsDir = "library/sounds/";
+const char *Game::defaultFontsDir = "library/fonts/";
 
 Game::Game(const Point &startingSize, const std::string &title)
 {
     this->startingSize = startingSize;
     this->title = title;
+
     this->audioFrequency = defaultAudioFrequency;
     this->audioChunkSize = defaultAudioChunkSize;
+    this->audioChannels = defaultAudioChannels;
+
+    this->texturesDir = defaultTexturesDir;
+	this->tilesetsDir = defaultTilesetsDir;
+	this->cursorsDir = defaultCursorsDir;
+	this->musicsDir = defaultMusicsDir;
+	this->soundsDir = defaultSoundsDir;
+	this->fontsDir = defaultFontsDir;
 
     this->scene = nullptr;
     this->mustQuit = false;
@@ -56,6 +54,7 @@ Game::Game(const Point &startingSize, const std::string &title)
     if (game)
     {
         delete game;
+        game = nullptr;
     }
     game = this;
 }
@@ -144,22 +143,44 @@ bool Game::init()
                     else
                     {
                         Log() << "audio opened";
-                        if (!window.create(startingSize.x, startingSize.y, title))
+                        if (Mix_AllocateChannels(audioChannels) < audioChannels)
                         {
-                            Error() << "creating window " << startingSize.x << "x" << startingSize.y << ": " << SDL_GetError();
+                            Error() << "could not allocate " << audioChannels << " audio channels";
                         }
                         else
                         {
-                            Log() << "window created";
-                            if (!renderer.create(window))
+                            Log() << "audio channels allocated";
+                            if (!window.create(startingSize.x, startingSize.y, title))
                             {
-                                Error() << "creating renderer: " << SDL_GetError();
+                                Error() << "creating window " << startingSize.x << "x" << startingSize.y << ": " << SDL_GetError();
                             }
                             else
                             {
-                                Input::start();
+                                Log() << "window created";
+                                if (!renderer.create(window))
+                                {
+                                    Error() << "creating renderer: " << SDL_GetError();
+                                }
+                                else
+                                {
+                                    Log() << "loading library";
+                                    bool libraryOK = Library::loadTextures(texturesDir) &&
+                                                     Library::loadTilesets(tilesetsDir) &&
+                                                     Library::loadCursors(cursorsDir) &&
+                                                     Library::loadMusics(musicsDir) &&
+                                                     Library::loadSounds(soundsDir) &&
+                                                     Library::loadFonts(fontsDir);
+                                    if (!libraryOK)
+                                    {
+                                        Error() << "could not load library";
+                                    }
+                                    else
+                                    {
+                                        Input::start();
 
-                                result = onStart();
+                                        result = onStart();
+                                    }
+                                }
                             }
                         }
                     }
@@ -261,6 +282,7 @@ void Game::startScene(Scene *scene)
     {
         scene->close();
         delete game->scene;
+        game->scene = nullptr;
     }
     game->scene = scene;
     scene->start();
@@ -277,6 +299,7 @@ void Game::combineScene(Scene *scene)
     {
         game->scene->transferTo(*scene);
         delete game->scene;
+        game->scene = nullptr;
     }
     game->scene = scene;
     game->scene->start();

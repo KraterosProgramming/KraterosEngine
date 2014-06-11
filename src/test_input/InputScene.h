@@ -2,8 +2,7 @@
 #include <KE/KE.h>
 using namespace KE;
 
-class InputScene : public Scene
-{
+class InputScene : public Scene {
     bool checkingText;
 
     virtual void onUpdate() {

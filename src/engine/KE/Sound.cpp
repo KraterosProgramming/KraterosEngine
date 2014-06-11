@@ -44,19 +44,42 @@ bool Sound::loadFromFile(const std::string &path)
     return loaded;
 }
 
-void Sound::play(int channel, int fadeInMS)
+void Sound::play(int channel, int fadeInMS) const
 {
-     Mix_FadeInChannel(channel, mixChunk, 0, fadeInMS);
+    stop(channel, 0);
+    if (!fadeInMS)
+    {
+        Mix_PlayChannel(channel, mixChunk, 0);
+    }
+    else
+    {
+        Mix_FadeInChannel(channel, mixChunk, 0, fadeInMS);
+    }
 }
 
-void Sound::loop(int channel, int fadeInMS)
+void Sound::loop(int channel, int fadeInMS) const
 {
-    Mix_FadeInChannel(channel, mixChunk, -1, fadeInMS);
+    stop(channel);
+    if (!fadeInMS)
+    {
+        Mix_PlayChannel(channel, mixChunk, -1);
+    }
+    else
+    {
+        Mix_FadeInChannel(channel, mixChunk, -1, fadeInMS);
+    }
 }
 
 void Sound::stop(int channel, int fadeOutMS)
 {
-    Mix_FadeOutChannel(channel, fadeOutMS);
+    if (!fadeOutMS)
+    {
+        Mix_HaltChannel(channel);
+    }
+    else
+    {
+        Mix_FadeOutChannel(channel, fadeOutMS);
+    }
 }
 
 void Sound::pause(int channel)

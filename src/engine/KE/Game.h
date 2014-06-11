@@ -11,7 +11,6 @@ class Game
 {
     Point startingSize;
     std::string title;
-    int audioFrequency, audioChunkSize;
 
     Window window;
     Renderer renderer;
@@ -31,8 +30,18 @@ class Game
     virtual bool onExit() { return true; };  // return false for cancel exit
 
 protected:
+    int audioFrequency;
+    int audioChunkSize;
+    int audioChannels;
+
+    const char *texturesDir;
+    const char *tilesetsDir;
+    const char *cursorsDir;
+    const char *musicsDir;
+    const char *soundsDir;
+    const char *fontsDir;
+
     Game(const Point &startingSize, const std::string &title);
-    Game(const Point &startingSize, const std::string &title, int audioFrequency, int audioChunkSize);
     virtual ~Game();
 
 public:
@@ -40,8 +49,17 @@ public:
     static const int imageTypesSupport;
     static const int audioTypesSupport;
     static const int audioFormat;
+
     static const int defaultAudioFrequency;
     static const int defaultAudioChunkSize;
+    static const int defaultAudioChannels;
+
+    static const char *defaultTexturesDir;
+    static const char *defaultTilesetsDir;
+    static const char *defaultCursorsDir;
+    static const char *defaultMusicsDir;
+    static const char *defaultSoundsDir;
+    static const char *defaultFontsDir;
 
     static int getResult();
     static Uint32 getTime();

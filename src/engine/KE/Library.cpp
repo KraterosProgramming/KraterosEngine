@@ -6,12 +6,12 @@ namespace KE
 Library Library::library;
 
 Library::Library() :
-    textures("Textures", {"jpg", "png"}),
-    tilesets("Tilesets", {"tileset"}),
-    cursors("Cursors", {"cursor"}),
-    musics("Musics", {"ogg"}),
-    sounds("Sounds", {"ogg"}),
-    fonts("Fonts", {"font"})
+    textures("texture", {"jpg", "png"}),
+    tilesets("tileset", {"tileset"}),
+    cursors("cursor", {"cursor"}),
+    musics("music", {"ogg"}),
+    sounds("sound", {"ogg"}),
+    fonts("font", {"font"})
 {
 
 }

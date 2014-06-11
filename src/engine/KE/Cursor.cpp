@@ -59,7 +59,55 @@ bool Cursor::createFromSystem(Type type)
 
 bool Cursor::loadFromFile(const std::string &path)
 {
-    // TODO: load cursor from XML
+//    <cursor file="cursor.png">
+//        <point x="0" y="0"/>
+//    </cursor>
+
+    bool ok = false;
+
+    XMLDocument doc;
+    XMLError error = doc.LoadFile(path.c_str());
+    if (error != XML_NO_ERROR)
+    {
+        Error() << "opening cursor file \"" << path << "\": XML error = " << error;
+    }
+    else
+    {
+        const XMLElement *elem = doc.FirstChildElement("cursor");
+        if (!elem)
+        {
+            Error() << "no cursor element in file \"" << path << "\"";
+        }
+        else
+        {
+            const char *fileName = elem->Attribute("file");
+            if (!fileName)
+            {
+                Error() << "no file attribute in cursor element, in file \"" << path << "\"";
+            }
+            else
+            {
+                // TODO: Path class? getDirectory, getName, getFullPath, concatenating "/"
+                std::string file = path.substr(0, path.find_last_of('/') + 1) + fileName;
+                ok = loadFromFile(file, Point::parseXML(elem));
+            }
+        }
+    }
+
+    return ok;
+}
+
+bool Cursor::loadFromFile(const std::string &path, const Point &p)
+{
+    Surface surface;
+    if (!surface.loadFromFile(path))
+    {
+        Error() << "could not load cursor image";
+    }
+    else
+    {
+        return createFromSurface(surface, p);
+    }
     return false;
 }
 

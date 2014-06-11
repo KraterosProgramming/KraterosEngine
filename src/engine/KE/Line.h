@@ -27,5 +27,6 @@ public:
     const Rect getRect() const;
 
 };
+
 }
 

@@ -19,8 +19,8 @@ public:
 
     bool loadFromFile(const std::string &path);
 
-    void play(int fadeInMS = 0);
-    void loop(int fadeInMS = 0);
+    void play(int fadeInMS = 0) const;
+    void loop(int fadeInMS = 0) const;
 
     static void stop(int fadeOutMS = 0);
     static void pause();

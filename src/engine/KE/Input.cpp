@@ -15,6 +15,7 @@ Input::Input() : joysticks(maxJoysticks, nullptr)
     this->lastKeyboard = nullptr;
     this->modifiers = KMOD_NONE;
     this->buttons = 0;
+    this->lastButtons = 0;
 }
 
 Input::~Input()
@@ -22,6 +23,7 @@ Input::~Input()
     if (lastKeyboard)
     {
         delete[] lastKeyboard;
+        lastKeyboard = nullptr;
     }
 }
 
@@ -33,12 +35,12 @@ void Input::start()
 
 void Input::update()
 {
-    input.text = "";
-
     for (int i = 0; i < input.numKeys; ++i)
     {
         input.lastKeyboard[i] = input.keyboard[i];
     }
+    input.lastButtons = input.buttons;
+    input.text = "";
 
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -222,14 +224,24 @@ bool Input::getKeyUp(int key)
     return false;
 }
 
-bool Input::getModifiers(int modifiers)
+bool Input::getModifier(int modifiers)
 {
     return (input.modifiers & modifiers) == modifiers;
 }
 
-bool Input::getButtons(int buttons)
+bool Input::getButton(int buttons)
 {
     return (input.buttons & buttons) == buttons;
+}
+
+bool Input::getButtonDown(int button)
+{
+    return (input.buttons & button) == button && (input.lastButtons & button) != button;
+}
+
+bool Input::getButtonUp(int button)
+{
+    return (input.lastButtons & button) == button && (input.buttons & button) != button;
 }
 
 const Point &Input::getMouse()

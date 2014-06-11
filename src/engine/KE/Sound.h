@@ -6,8 +6,6 @@
 namespace KE
 {
 
-template<class> class Collection;
-
 class Sound
 {
     Mix_Chunk *mixChunk;
@@ -21,15 +19,15 @@ public:
 
     bool loadFromFile(const std::string &path);
 
-    void play(int channel, int fadeInMS = 0);
-    void loop(int channel, int fadeInMS = 0);
+    void play(int channel = -1, int fadeInMS = 0) const;
+    void loop(int channel = -1, int fadeInMS = 0) const;
 
-    static void stop(int channel, int fadeOutMS = 0);
-    static void pause(int channel);
-    static void resume(int channel);
+    static void stop(int channel = -1, int fadeOutMS = 0);
+    static void pause(int channel = -1);
+    static void resume(int channel = -1);
 
-    static void setVolume(int channel, int volume);
-    static int getVolume(int channel);
+    static void setVolume(int volume, int channel = -1);
+    static int getVolume(int channel = -1);
 };
 
 }

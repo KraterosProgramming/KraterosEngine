@@ -2,8 +2,7 @@
 #include <KE/KE.h>
 using namespace KE;
 
-class Object1 : public Object
-{
+class Object1 : public Object {
     virtual void onStart() {
         Log() << "object1 on start";
     }

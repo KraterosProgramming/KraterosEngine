@@ -47,7 +47,6 @@
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
 		</Linker>
-		<Unit filename="../../src/engine/KE/Animatino.cpp" />
 		<Unit filename="../../src/engine/KE/Animation.cpp" />
 		<Unit filename="../../src/engine/KE/Animation.h" />
 		<Unit filename="../../src/engine/KE/Audio.h" />
@@ -103,6 +102,8 @@
 		<Unit filename="../../src/engine/KE/Texture.h" />
 		<Unit filename="../../src/engine/KE/Tileset.cpp" />
 		<Unit filename="../../src/engine/KE/Tileset.h" />
+		<Unit filename="../../src/engine/KE/Timer.cpp" />
+		<Unit filename="../../src/engine/KE/Timer.h" />
 		<Unit filename="../../src/engine/KE/Tools.cpp" />
 		<Unit filename="../../src/engine/KE/Tools.h" />
 		<Unit filename="../../src/engine/KE/Video.h" />

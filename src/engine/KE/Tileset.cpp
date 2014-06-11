@@ -18,82 +18,135 @@ Tileset::~Tileset()
 
 bool Tileset::loadFromFile(const std::string &path)
 {
+//    <tileset texture="textures/guy" />
+//        <frames>  <!-- optional -->
+//            <frame x="0" y="0" w="100" h="100" />
+//            <frame x="100" y="0" w="100" h="100" />
+//        </frame>
+//        <animations>  <!-- optional -->
+//            <animation name="walk" fps="24">
+//                <frame id="0" />
+//                <frame id="1" />
+//            </animation>
+//            <animation name="crouch" fps="24">
+//                <frame id="0" />
+//                <frame id="2" />
+//            </animation>
+//        </animations>
+//    </tileset>
+
+    bool ok = false;
+
     XMLDocument doc;
-    XMLError loaded = doc.LoadFile(path.c_str());
-    if (!loaded)
+    XMLError error = doc.LoadFile(path.c_str());
+    if (error != XML_NO_ERROR)
     {
-        Error() << "opening XML file \"" << path << "\": XML error = " << loaded;
+        Error() << "opening tileset file \"" << path << "\": XML error = " << error;
     }
     else
     {
-        const XMLElement *spr = doc.FirstChildElement("sprite");
-        if (!spr)
+        const XMLElement *elem = doc.FirstChildElement("tileset");
+        if (!elem)
         {
-            Error() << "no sprite element in file \"" << path << "\"";
+            Error() << "no tileset element in file \"" << path << "\"";
         }
         else
         {
-            const XMLElement *tex = spr->FirstChildElement("texture");
-            if (!tex)
+            const char *textureKeyname = elem->Attribute("texture");
+            if (!textureKeyname)
             {
-                Error() << "no texture in sprite element of file \"" << path << "\"";
+                Error() << "no texture attribute in tileset element, in file \"" << path << "\"";
             }
             else
             {
-                const char *texName = tex->Attribute("name");
-                if (!texName)
+                texture = Library::getTexture(textureKeyname);
+                if (!texture)
                 {
-                    Error() << "no name attribute in texture element, file \"" << path << "\"";
+                    Error() << "invalid texture attribute in tileset element, in file \"" << path << "\"";
                 }
                 else
                 {
-                    texture = Library::getTexture(texName);
-                    if (!texture)
+                    float offsetX = elem->FloatAttribute("offsetX");
+                    float offsetY = elem->FloatAttribute("offsetY");
+                    // optional frames element
+                    const XMLElement *framesElem = elem->FirstChildElement("frames");
+                    if (!framesElem)
                     {
-                        Error() << "texture " << texName << " not loaded";
+                        Rect source = texture->getClip();
+                        Point offset(offsetX * source.w, offsetY * source.h);
+                        frames.push_back({source, offset});
                     }
                     else
                     {
-                        const XMLElement *frms = spr->FirstChildElement("frames");
-                        if (!frms)
+                        for (const XMLElement *f = framesElem->FirstChildElement("frame"); f != nullptr; f = f->NextSiblingElement("frame"))
                         {
-                            frames.push_back(texture->getClip());
-                        }
-                        else
-                        {
-                            for (const XMLElement *frm = frms->FirstChildElement("frame"); frm != nullptr; frm = frm->NextSiblingElement("frame"))
-                            {
-                                frames.push_back(Rect(frm->IntAttribute("x"), frm->IntAttribute("y"), frm->IntAttribute("w"), frm->IntAttribute("h")));
-                            }
-                        }
+                            Rect source = Rect::parseXML(f);
 
-                        const XMLElement *anms = spr->FirstChildElement("animations");
-                        std::vector<size_t> frameIDs;
-                        if (!anms)
-                        {
-                            frameIDs.push_back(0);
-                            animations.insert( std::pair<std::string, Animation>("idle", Animation(1, frameIDs)) );
+                            float frameOffsetX = offsetX;
+                            float frameOffsetY = offsetY;
+                            f->QueryFloatAttribute("offsetX", &offsetX);
+                            f->QueryFloatAttribute("offsetY", &offsetY);
+                            Point offset(frameOffsetX * source.w, frameOffsetY * source.h);
+                            frames.push_back({source, offset});
                         }
-                        else
-                        {
-                            for (const XMLElement *anm = anms->FirstChildElement("animation"); anm != nullptr; anm = anm->NextSiblingElement("animation"))
-                            {
-                                frameIDs.clear();
-                                for (const XMLElement *frm = anms->FirstChildElement("frame"); frm != nullptr; frm = frm->NextSiblingElement("frame"))
-                                {
-                                    frameIDs.push_back(frm->IntAttribute("id"));
-                                }
-                                animations.insert(std::pair<std::string, Animation>(anm->Attribute("name"), Animation(anm->IntAttribute("fps"), frameIDs)));
-                            }
-                        }
-
-                        return true;
                     }
+
+                    // optional animations element
+                    const XMLElement *animationsElem = elem->FirstChildElement("animations");
+                    if (!animationsElem)
+                    {
+                        std::vector<size_t> firstFrame(1, 0);
+                        animations.insert(std::pair<std::string, Animation>("idle", Animation(1, firstFrame)));
+                    }
+                    else
+                    {
+                        for (const XMLElement *a = animationsElem->FirstChildElement("animation"); a != nullptr; a = a->NextSiblingElement("animation"))
+                        {
+                            const char *name = a->Attribute("name");
+                            if (!name)
+                            {
+                                name = "idle";
+                            }
+
+                            if (animations.count(name))
+                            {
+                                Error() << "duplicated animation name in file \"" << path << "\"";
+                            }
+                            else
+                            {
+                                int fps = a->IntAttribute("fps");
+                                if (!fps)
+                                {
+                                    Error() << "no fps attribute (bigger than 0) in animation element, in file \"" << path << "\"";
+                                }
+                                else
+                                {
+                                    std::vector<size_t> frameIDs;
+                                    for (const XMLElement *f = a->FirstChildElement("frame"); f != nullptr; f = f->NextSiblingElement("frame"))
+                                    {
+                                        frameIDs.push_back(f->UnsignedAttribute("id"));
+                                    }
+
+                                    if (!frameIDs.size())
+                                    {
+                                        Error() << "no frames subelements in element animation, in file \"" << path << "\"";
+                                    }
+                                    else
+                                    {
+                                        animations.insert(std::pair<std::string, Animation>(name, Animation(fps, frameIDs)));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    ok = true;
                 }
             }
         }
     }
-    return false;
+
+    return ok;
 }
 
 const Animation *Tileset::getAnimation(const std::string &keyname) const
@@ -122,7 +175,8 @@ void Tileset::draw(const Point &position, size_t frame) const
     }
     else
     {
-        texture->draw(position, frames[frame]);
+        Point final_position = position - frames[frame].source.getPosition() - frames[frame].offset;
+        texture->draw(final_position, frames[frame].source);
     }
 }
 
@@ -139,7 +193,8 @@ void Tileset::draw(const Point &position, const Rect &bounds, size_t frame) cons
     else
     {
         Point final_position (std::max(position.x, bounds.x), std::max(position.y, bounds.y));
-        Rect final_source = Geometry::intersect(frames[frame], bounds.move(-position));
+        final_position -= frames[frame].source.getPosition();
+        Rect final_source = Geometry::intersect(frames[frame].source, bounds.move(-position));
         texture->draw(final_position, final_source);
     }
 }

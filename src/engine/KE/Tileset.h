@@ -11,8 +11,14 @@ namespace KE
 
 class Tileset
 {
-    const Texture* texture;
-    std::vector<Rect> frames;
+    struct Frame
+    {
+        Rect source;
+        Point offset;
+    };
+
+    const Texture *texture;
+    std::vector<Frame> frames;
     std::map<std::string, Animation> animations;
 
 public:

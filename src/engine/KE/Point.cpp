@@ -26,11 +26,6 @@ Point::operator SDL_Point*() const
     return (SDL_Point*)(this);
 }
 
-Point::operator bool() const
-{
-    return x != 0 && y != 0;
-}
-
 const Point Point::operator- () const
 {
     return Point(-x, -y);
@@ -118,6 +113,16 @@ const Point Point::normalize() const
 {
     int l = getLength();
     return Point(x / l, y / l);
+}
+
+bool Point::zero() const
+{
+    return x == 0 && y == 0;
+}
+
+Point Point::parseXML(const tinyxml2::XMLElement *elem)
+{
+    return Point(elem->IntAttribute("x"), elem->IntAttribute("y"));
 }
 
 }

@@ -44,19 +44,41 @@ bool Music::loadFromFile(const std::string &path)
     return loaded;
 }
 
-void Music::play(int fadeInMS)
+void Music::play(int fadeInMS) const
 {
-    Mix_FadeInMusic(mixMusic, 0, fadeInMS);
+    if (!fadeInMS)
+    {
+        Mix_PlayMusic(mixMusic, 0);
+    }
+    else
+    {
+        Mix_FadeInMusic(mixMusic, 0, fadeInMS);
+    }
 }
 
-void Music::loop(int fadeInMS)
+void Music::loop(int fadeInMS) const
 {
-    Mix_FadeInMusic(mixMusic, -1, fadeInMS);
+    stop();
+    if (!fadeInMS)
+    {
+        Mix_PlayMusic(mixMusic, -1);
+    }
+    else
+    {
+        Mix_FadeInMusic(mixMusic, -1, fadeInMS);
+    }
 }
 
 void Music::stop(int fadeOutMS)
 {
-    Mix_FadeOutMusic(fadeOutMS);
+    if (!fadeOutMS)
+    {
+        Mix_HaltMusic();
+    }
+    else
+    {
+        Mix_FadeOutMusic(fadeOutMS);
+    }
 }
 
 void Music::pause()

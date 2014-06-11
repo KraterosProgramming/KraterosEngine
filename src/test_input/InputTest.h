@@ -2,10 +2,7 @@
 #include <KE/KE.h>
 using namespace KE;
 
-#include "InputScene.h"
-
-class InputTest : public Game
-{
+class InputTest : public Game {
     virtual int onStart() override {
         startScene(new InputScene());
         return 0;

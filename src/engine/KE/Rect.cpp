@@ -78,4 +78,9 @@ const Point Rect::getCenter() const
     return Point(x + w/2, y + h/2);
 }
 
+Rect Rect::parseXML(const tinyxml2::XMLElement *elem)
+{
+    return Rect(elem->IntAttribute("x"), elem->IntAttribute("y"), elem->IntAttribute("w"), elem->IntAttribute("h"));
+}
+
 }

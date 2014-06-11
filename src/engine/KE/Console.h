@@ -1,6 +1,9 @@
 #pragma once
-#include <iostream>
-#include <fstream>
+#ifdef KRATEROS_ENGINE_DEBUG
+    #include <iostream>
+#else
+    #include <fstream>
+#endif // KRATEROS_ENGINE_DEBUG
 
 namespace KE
 {

@@ -18,7 +18,7 @@ public:
 
     void quit();
 
-    bool loadFromFile(const std::string &path, const std::string &keyname);
+    bool load(const std::string &path, const std::string &keyname);
     bool loadDirectory(const std::string &directory);
     T *get(const std::string &keyname);
 };
@@ -44,12 +44,13 @@ void Collection<T>::quit()
 }
 
 template<class T>
-bool Collection<T>::loadFromFile(const std::string &path, const std::string &keyname)
+bool Collection<T>::load(const std::string &path, const std::string &keyname)
 {
     T* loaded = new T();
     if (!loaded->loadFromFile(path))
     {
         delete loaded;
+        loaded = nullptr;
     }
     else
     {
@@ -65,19 +66,22 @@ bool Collection<T>::loadDirectory(const std::string &directory)
     std::vector<std::string> files;
     if (!getFilesInDirectory(directory, files, extensions))
     {
-        Warning() << "could not find any proper file for " << name << " in directory " << directory;
+        Warning() << "could not find any " << name << " file in directory " << directory;
     }
     else
     {
         for (auto &each : files)
         {
-            std::string keyname = each.substr(0, each.find_last_of('.')); // TODO: Path class?
-            if (!loadFromFile(each, keyname))
-            {
-                ok = false;
-            }
+            std::string keyname = each.substr(0, each.find_last_of('.')).substr(directory.size());
+            ok = ok && load(each, keyname);
         }
     }
+
+    if (!ok)
+    {
+        Error() << "could not load " << name << " directory \"" << directory << "\"";
+    }
+
     return ok;
 }
 
@@ -87,7 +91,7 @@ T *Collection<T>::get(const std::string &keyname)
     T* found = nullptr;
     if (!collection.count(keyname))
     {
-        Error() << "element with keyname \"" << keyname << "\" not loaded";
+        Error() << name << " with keyname \"" << keyname << "\" not loaded";
     }
     else
     {

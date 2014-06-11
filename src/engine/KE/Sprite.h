@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Tileset.h"
+#include "Timer.h"
 
 namespace KE
 {
@@ -9,16 +10,16 @@ class Sprite
 {
     const Tileset *tileset;
     const Animation *animation;
-    Uint32 startTime, pauseTime;
+    Timer timer;
     bool loop, backwards;
 
 public:
-    Sprite(const Tileset *tileset);
+    Sprite();
 
-    Uint32 getCurTime();
+    void setTileset(const Tileset *tileset);
     size_t getCurFrame();
 
-    void play(const std::string &animation, bool loop, bool backwards);
+    void play(const std::string &animation = "idle", bool loop = false, bool backwards = false);
     void pause();
     void resume();
 

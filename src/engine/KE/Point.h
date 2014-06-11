@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL2/SDL.h>
 
+#include "tinyxml2.h"
+
 namespace KE
 {
 
@@ -13,7 +15,6 @@ public:
     static const Point fromAngle(double radians, double length = 1);
 
     operator SDL_Point*() const;
-    operator bool() const;
 
     const Point operator- () const;
 
@@ -34,6 +35,9 @@ public:
     double getLength() const;
     double getSquaredLength() const;
     const Point normalize() const;
+    bool zero() const;
+
+    static Point parseXML(const tinyxml2::XMLElement *elem);
 
 };
 }

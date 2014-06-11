@@ -4,37 +4,29 @@
 namespace KE
 {
 
-Sprite::Sprite(const Tileset *tileset)
+Sprite::Sprite()
 {
-    this->tileset = tileset;
-    this->animation = tileset->getAnimation("idle");
-    this->startTime = 0;
-    this->pauseTime = 0;
+    this->tileset = nullptr;
+    this->animation = nullptr;
     this->loop = false;
     this->backwards = false;
 }
 
-Uint32 Sprite::getCurTime()
+void Sprite::setTileset(const Tileset *tileset)
 {
-    if (pauseTime)
-    {
-        return pauseTime - startTime;
-    }
-    else
-    {
-        return Game::getTime() - startTime;
-    }
+    this->tileset = tileset;
+    this->animation = tileset->getAnimation("idle");
 }
 
 size_t Sprite::getCurFrame()
 {
-    return animation->getFrameAt(getCurTime(), loop, backwards);
+    return animation->getFrameAt(timer.getTime(), loop, backwards);
 }
 
 void Sprite::play(const std::string &animation, bool loop, bool backwards)
 {
-    startTime = Game::getTime();
-    pauseTime = 0;
+    timer.start();
+
     this->animation = tileset->getAnimation(animation);
     this->loop = loop;
     this->backwards = backwards;
@@ -42,12 +34,12 @@ void Sprite::play(const std::string &animation, bool loop, bool backwards)
 
 void Sprite::pause()
 {
-    pauseTime = Game::getTime();
+    timer.pause();
 }
 
 void Sprite::resume()
 {
-    pauseTime = 0;
+    timer.resume();
 }
 
 void Sprite::draw(const Point &position)

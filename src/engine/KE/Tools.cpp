@@ -14,7 +14,7 @@ size_t getFilesInDirectory(std::string directory, std::vector<std::string> &file
     tinydir_dir dir;
     if (tinydir_open(&dir, directory.c_str()) < 0)
     {
-        Warning() << "could not open directory \"" << directory << "\"";
+        Error() << "could not open directory \"" << directory << "\"";
     }
     else
     {
@@ -25,7 +25,7 @@ size_t getFilesInDirectory(std::string directory, std::vector<std::string> &file
         {
             if (tinydir_readfile(&dir, &file) < 0)
             {
-                Warning() << "could not reading file at directory \"" << directory << "\"";
+                Error() << "reading file at directory \"" << directory << "\"";
             }
             else
             {
@@ -37,9 +37,13 @@ size_t getFilesInDirectory(std::string directory, std::vector<std::string> &file
                     {
                         getFilesInDirectory(path, files, extensions);
                     }
-                    else if (std::find(extensions.begin(), extensions.end(), path.substr(path.find_last_of('.'))) != extensions.end())
+                    else
                     {
-                        files.push_back(path);
+                        std::string ext = path.substr(path.find_last_of('.') + 1);
+                        if (std::find(extensions.begin(), extensions.end(), ext) != extensions.end())
+                        {
+                            files.push_back(path);
+                        }
                     }
                 }
             }

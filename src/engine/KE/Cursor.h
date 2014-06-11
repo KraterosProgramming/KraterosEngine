@@ -28,6 +28,7 @@ public:
     bool createFromSurface(const Surface &surface, const Point &p);
     bool createFromSystem(Type type);
     bool loadFromFile(const std::string &path);
+    bool loadFromFile(const std::string &texture, const Point &p);
 
     operator SDL_Cursor*() const;
 

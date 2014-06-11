@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
+
+#include "tinyxml2.h"
 #include "Point.h"
 
 namespace KE
@@ -23,6 +25,8 @@ public:
     const Point getPosition() const;
     const Point getSize() const;
     const Point getCenter() const;
+
+    static Rect parseXML(const tinyxml2::XMLElement *elem);
 };
 
 }

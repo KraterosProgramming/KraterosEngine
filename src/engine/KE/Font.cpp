@@ -1,9 +1,6 @@
 #include "Font.h"
 #include <string>
 
-#include "Tools.h"
-using namespace tinyxml2;
-
 namespace KE
 {
 
@@ -58,61 +55,65 @@ bool Font::loadFromFile(const std::string &path, int size, int style)
 bool Font::loadFromFile(const std::string &path)
 {
 //    <font file="font.ttf" size="24" />
-//    <font file="font.ttf" size="24" style="bold" />
+//    <font file="font.ttf" size="24" style="b" />
+
+    bool ok = false;
+
     XMLDocument doc;
-    XMLError loaded = doc.LoadFile(path.c_str());
-    if (!loaded)
+    XMLError error = doc.LoadFile(path.c_str());
+    if (error != XML_NO_ERROR)
     {
-        Error() << "opening XML file \"" << path << "\": XML error = " << loaded;
+        Error() << "opening font file \"" << path << "\": XML error = " << error;
     }
     else
     {
-        const XMLElement *fnt = doc.FirstChildElement("font");
-        if (!fnt)
+        const XMLElement *elem = doc.FirstChildElement("font");
+        if (!elem)
         {
             Error() << "no font element in file \"" << path << "\"";
         }
         else
         {
-            const char *file = fnt->Attribute("file");
-            int size = fnt->IntAttribute("size");
-
-            TTF_Font *opened = TTF_OpenFont(file, size);
-            if (!opened)
+            const char *fileAttr = elem->Attribute("file");
+            if (!fileAttr)
             {
-                Error() << "could not open TTF font: " << TTF_GetError();
+                Error() << "no file attribute in font element, in file \"" << path << "\"";
             }
             else
             {
-                int style = 0;
-                if (fnt->Attribute("style", "bold"))
+                int size = elem->IntAttribute("size");
+                if (!size)
                 {
-                    style = Style::Bold;
+                    Error() << "no size attribute in font element, in file \"" << path << "\"";
                 }
-                else if (fnt->Attribute("style", "italic"))
+                else
                 {
-                    style = Style::Italic;
-                }
-                else if (fnt->Attribute("style", "underline"))
-                {
-                    style = Style::Underline;
-                }
-                else if (fnt->Attribute("style", "strike through"))
-                {
-                    style = Style::StrikeThrough;
-                }
+                    int style = 0;
 
-                if (style)
-                {
-                    TTF_SetFontStyle(ttfFont, style);
-                }
+                    // optional style
+                    const char* styleDesc = elem->Attribute("style");
+                    if (styleDesc)
+                    {
+                        for (const char* c = styleDesc; *c != '\0'; ++c)
+                        {
+                            switch (*c)
+                            {
+                                case 'b':   style |= TTF_STYLE_BOLD;            break;
+                                case 'i':   style |= TTF_STYLE_ITALIC;          break;
+                                case 's':   style |= TTF_STYLE_STRIKETHROUGH;   break;
+                                case 'u':   style |= TTF_STYLE_UNDERLINE;       break;
+                            }
+                        }
+                    }
 
-                load(ttfFont);
-                return true;
+                    std::string file = path.substr(0, path.find_last_of('/') + 1) + fileAttr;
+                    ok = loadFromFile(file, size, style);
+                }
             }
         }
     }
-    return false;
+
+    return ok;
 }
 
 bool Font::renderOnSurface(Surface &out, const std::string &text, const Color &color) const

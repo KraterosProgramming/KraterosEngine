@@ -6,11 +6,10 @@
 
 #include "Color.h"
 #include "Texture.h"
+#include "Tools.h"
 
 namespace KE
 {
-
-template<class> class Collection;
 
 class Font
 {

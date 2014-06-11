@@ -6,6 +6,7 @@
 #include "tinyxml2.h"
 #include "Console.h"
 #include "Instance.h"
+#include "Timer.h"
 
 namespace KE
 {

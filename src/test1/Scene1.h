@@ -4,8 +4,7 @@ using namespace KE;
 
 #include "Object1.h"
 
-class Scene1 : public KE::Scene
-{
+class Scene1 : public KE::Scene {
     virtual void onStart() override {
         Log() << "scene1 on start";
         add(new Object1());

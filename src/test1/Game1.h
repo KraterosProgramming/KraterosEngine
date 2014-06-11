@@ -4,8 +4,7 @@ using namespace KE;
 
 #include "Scene1.h"
 
-class Game1 : public Game
-{
+class Game1 : public Game {
     virtual int onStart() override {
         Log() << "Game1 on start";
         startScene(new Scene1());

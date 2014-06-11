@@ -12,13 +12,14 @@
 	"Library.h"
 	"Game.h"
 
-1402267543 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tools.h
+1402426694 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tools.h
 	<algorithm>
 	<ctime>
 	<cstdlib>
 	"tinyxml2.h"
 	"Console.h"
 	"Instance.h"
+	"Timer.h"
 
 1402257667 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tinyxml2.h
 	<ctype.h>
@@ -59,11 +60,12 @@
 1402180435 c:\users\eric\documents\github\kraterosengine\src\engine\ke\point.h
 	<SDL2/SDL.h>
 
-1402186654 c:\users\eric\documents\github\kraterosengine\src\engine\ke\rect.h
+1402432022 c:\users\eric\documents\github\kraterosengine\src\engine\ke\rect.h
 	<SDL2/SDL.h>
+	"tinyxml2.h"
 	"Point.h"
 
-1402180082 c:\users\eric\documents\github\kraterosengine\src\engine\ke\line.h
+1402430899 c:\users\eric\documents\github\kraterosengine\src\engine\ke\line.h
 	<SDL2/SDL.h>
 	"Point.h"
 	"Rect.h"
@@ -89,7 +91,7 @@
 	"Sound.h"
 	"Font.h"
 
-1402421675 c:\users\eric\documents\github\kraterosengine\src\engine\ke\collection.h
+1402433258 c:\users\eric\documents\github\kraterosengine\src\engine\ke\collection.h
 	<map>
 	<string>
 	"Tools.h"
@@ -105,7 +107,7 @@
 	<vector>
 	"Rect.h"
 
-1402254380 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tileset.h
+1402431916 c:\users\eric\documents\github\kraterosengine\src\engine\ke\tileset.h
 	<map>
 	<string>
 	"Texture.h"
@@ -126,23 +128,24 @@
 	<SDL2/SDL_mixer.h>
 	<string>
 
-1402189365 c:\users\eric\documents\github\kraterosengine\src\engine\ke\sound.h
+1402431413 c:\users\eric\documents\github\kraterosengine\src\engine\ke\sound.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<string>
 
-1402257583 c:\users\eric\documents\github\kraterosengine\src\engine\ke\font.h
+1402431672 c:\users\eric\documents\github\kraterosengine\src\engine\ke\font.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<string>
 	<vector>
 	"Color.h"
 	"Texture.h"
+	"Tools.h"
 
 1401980388 c:\users\eric\documents\github\kraterosengine\src\engine\ke\color.h
 	<SDL2/SDL.h>
 
-1402425324 c:\users\eric\documents\github\kraterosengine\src\engine\ke\game.h
+1402432844 c:\users\eric\documents\github\kraterosengine\src\engine\ke\game.h
 	"Scene.h"
 	"Window.h"
 	"Renderer.h"
@@ -167,4 +170,11 @@
 
 1402425087 c:\users\eric\documents\github\kraterosengine\src\test_input\inputscene.h
 	<KE/KE.h>
+
+1402426684 c:\users\eric\documents\github\kraterosengine\src\engine\ke\timer.h
+	<SDL2/SDL.h>
+
+1402426682 source:c:\users\eric\documents\github\kraterosengine\src\engine\ke\timer.cpp
+	"Timer.h"
+	"Game.h"
 

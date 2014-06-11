@@ -19,6 +19,7 @@ private:
     Uint8 *lastKeyboard;
     int modifiers;
     int buttons;
+    int lastButtons;
     Point mouse;
     std::vector<SDL_Joystick*> joysticks;
     std::string text;
@@ -56,8 +57,10 @@ public:
     static bool         getKey(int key);
     static bool         getKeyDown(int key);
     static bool         getKeyUp(int key);
-    static bool         getModifiers(int modifiers); // keyboard modifiers OR'd
-    static bool         getButtons(int buttons);     // mouse buttons OR'd
+    static bool         getModifier(int modifier); // keyboard modifiers OR'd
+    static bool         getButton(int button);     // mouse buttons OR'd
+    static bool         getButtonDown(int button);
+    static bool         getButtonUp(int button);
     static const Point &getMouse();
     static bool         getJoystickButton(int joyID, int button);
     static Sint16       getJoystickAxis(int joyID, int axis);

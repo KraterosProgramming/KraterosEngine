@@ -8,5 +8,8 @@
 		<Project filename="test_input/test_input.cbp">
 			<Depends filename="engine/KraterosEngine.cbp" />
 		</Project>
+		<Project filename="../src/test_library/test_library.cbp">
+			<Depends filename="engine/KraterosEngine.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
